@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+    <!--<context:property-placeholder location="classpath:*.properties" ignore-unresolvable="true"/>-->
+    <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
+
+    <!--    <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+            <property name="mergeSql" value="true"/>
+            <property name="slowSqlMillis" value="3000"/>
+            <property name="logSlowSql" value="true"/>
+        </bean>
+        <bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">
+            <property name="connectionLogEnabled" value="false"/>
+            <property name="statementLogEnabled" value="false"/>
+            <property name="resultSetLogEnabled" value="false"/>
+            <property name="statementCreateAfterLogEnabled" value="false"/>
+            <property name="statementPrepareAfterLogEnabled" value="false"/>
+            <property name="statementPrepareCallAfterLogEnabled" value="false"/>
+            <property name="statementExecutableSqlLogEnable" value="true"/>
+        </bean>-->
+    <!-- druid spring 拦截 begin -->
+    <!-- 数据源配置, 使用 druid 数据库连接池 -->
+    <!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass 基本属性 url、user、password 配置初始化大小、最小、最大
+        配置获取连接等待超时的时间 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+    <!--BasicDataSource, SqlSessionFactoryBean, SqlSessionTemplate-->
+    <bean id="mysqlDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!--初始化连接大小-->
+        <property name="initialSize" value="2"/>
+        <!--衔接吃最大数据库连接，0为无限-->
+        <property name="maxActive" value="200"/>
+        <!--最小空闲连接-->
+        <property name="minIdle" value="1"/>
+        <!--最大等待时间。超时异常。-1表示无限-->
+        <property name="maxWait" value="60000"/>
+        <!--配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒-->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <!--配置一个连接在池中最小生存的时间，单位是毫秒-->
+        <!--<property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="${validationQuery}"/>
+        <property name="testWhileIdle" value="false"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        &lt;!&ndash;打开PSCache，并且指定每个连接上PSCache的大小&ndash;&gt;
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxOpenPreparedStatements" value="100"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="100"/>
+        <property name="proxyFilters">
+            <list>
+                <ref bean="wall-filter" />
+                <ref bean="stat-filter"/>
+                <ref bean="log-filter"/>
+            </list>
+        </property>-->
+    </bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="mysqlDataSource" />
+        <!-- 自动扫描mapper.xml文件,也可在mybatisconfig里配置 -->
+        <!--此处扫描mapper配置后，不能在mybatisconfig下再配置
+        否则报错 Result Maps collection already contains value for com.ax.dao.UserMapper.User-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml" ></property>
+        <!--读取mybatis配置，无特殊配置也可不写-->
+        <property name="configLocation" value="classpath:mybatis-spring.xml" />
+    </bean>
+
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="mysqlDataSource"/>
+    </bean>
+    <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+    <!--<bean id="umapper" class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+    <!--<bean  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.ax.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.chd.hrp.**.dao" />
+        <property name="markerInterface" value="com.chd.base.SqlMapper" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>-->
+<!--    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.ax.dao.UserMapper"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>-->
+
+
+    <!--事务-->
+    <bean id="txm" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="mysqlDataSource"></property>
+    </bean>
+
+</beans>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE configuration PUBLIC "-//my"> -->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--引入配置-->
+    <!--resource为引入类路径classpath下的配置文件，也可用文件的url格式路径引入-->
+    <properties resource="jdbc.properties"/>
+    <!--log实现为LOG4J-->
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+        <!--<setting name="logImpl" value="STDOUT_LOGGING" />-->
+        <!--开启驼峰命名映射：A_COUNT/aCount -->
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+        <!--开启二级缓存,全局总开关，这里关闭，mapper中开启了也没用-->
+        <setting name="cacheEnabled" value="false"/>
+    </settings>
+    <typeAliases>
+        <!--包下的类起别名，和类名一致不区分大小写-->
+        <package name="com.ax.model"/>
+    </typeAliases>
+    <environments default="axdevelopment">
+        <environment id="axdevelopment">
+            <!--JDBC事务管理-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--mybatis自带数据源POOLED，基于tomcat的数据源JNDI-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driverClassName}" />
+                <property name="url" value="${jdbc.url}" />
+                <property name="username" value="${jdbc.username}" />
+                <property name="password" value="${jdbc.password}" />
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--resouce,类路径classpath-->
+        <!--Could not find resource mapper/*.xml-->
+        <mapper resource="mapper/UserMapper.xml"/>
+        <!--class,使用映射接口实现类的完全限定名，//该src下的xml已被删除-->
+        <!--<mapper class="com.ax.dao.UserMapper"/>-->
+    </mappers>
+
+
+</configuration>
