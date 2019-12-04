@@ -19,8 +19,7 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.DriverManager;
@@ -111,28 +110,13 @@ public class TestJava {
         System.out.print(ul);
     }
     @Test
-    public void testActivti(){
-/*
+    public void testMybatis(){
         //调用数据库
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
         JdbcTemplate jt = (JdbcTemplate) context.getBean("jdbcTemplate");
         jt.update("delete from t_filelibrary where fileid='111'");
-*/
-        //获取流程引擎
-//        ProcessEngine proEng = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml").buildProcessEngine();
-        ProcessEngine proEng = ProcessEngines.getDefaultProcessEngine();
-        //获取仓库服务实例
-//        RepositoryService rs = proEng.getRepositoryService();
-        //创建部署构建实例
-//        DeploymentBuilder builder =rs.createDeployment();
-        //添加工作流
-//        builder.addClasspathResource("diagrams/actTest.bpmn");//bpmn文件的名称
-        //部署
-//        builder.deploy();
 
-        //使用runtimeservic启动流程实例
-        RuntimeService runtimeService = proEng.getRuntimeService();
-        ProcessInstance pi = runtimeService.startProcessInstanceByKey("myProcessAx");//
     }
+
 
 }
