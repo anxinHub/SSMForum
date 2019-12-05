@@ -66,6 +66,12 @@
             <version>5.18.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-all</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+
         <!--other-->
         <dependency>
             <groupId>org.projectlombok</groupId>

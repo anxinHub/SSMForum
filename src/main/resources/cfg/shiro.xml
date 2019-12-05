@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+              http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/context
+              http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <description>si</description>
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="authRealm"/>
+        <property name="cacheManager" ref="shiroEhcachemanager"/>
+    </bean>
+    <!--自定义权限认证-->
+    <bean id="authRealm" class="AuthRealm" >
+        <property name="userService" ref="userService" />
+        <property name="credentialsMatcher" ref="passwordMatcher">
+    </bean>
+    <!--密码加密策略-->
+    <bean id="passwordMatcher" class="CustomCredentialsMatcher"></bean>
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/index.jsp"></property>
+        <property name="successUrl" value="/home.action"></property>
+        <property name="filterChainDefinitions">
+            <value>
+                /index.jsp = anon
+            </value>
+        </property>
+    </bean>
+</beans>
