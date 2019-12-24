@@ -7,7 +7,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
     <!--<context:property-placeholder location="classpath:*.properties" ignore-unresolvable="true"/>-->
-    <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:cfg/jdbc.properties" ignore-unresolvable="true"/>
 
     <!--    <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
             <property name="mergeSql" value="true"/>
@@ -69,7 +69,7 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
         否则报错 Result Maps collection already contains value for com.ax.dao.UserMapper.User-->
         <property name="mapperLocations" value="classpath:mapper/*.xml" ></property>
         <!--读取mybatis配置，无特殊配置也可不写-->
-        <property name="configLocation" value="classpath:mybatis-spring.xml" />
+        <property name="configLocation" value="classpath:cfg/mybatis-spring.xml" />
     </bean>
 
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">

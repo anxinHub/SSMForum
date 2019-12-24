@@ -65,12 +65,11 @@ public class TestJava {
     @Test
     public void justMybatisTest(){
         try {
-            String resource = "mybatis-config.xml";
+            String resource = "cfg/mybatis-config.xml";
             InputStream is = Resources.getResourceAsStream(resource);
-
             SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
             SqlSession sqlSession = ssf.openSession();
-/*
+
             List<User> uList = sqlSession.selectList("com.ax.dao.UserMapper.getAllUser");
             List<User> cachFirst = sqlSession.getMapper(UserMapper.class).getAllUser();
 
@@ -81,14 +80,12 @@ public class TestJava {
             Integer successRow = sqlSession.insert("com.ax.dao.UserMapper.insertUser",user);
             if (successRow!=0){
             //    sqlSession.commit();
-            }*/
-
+            }
             List<User> cachFirstTwo = sqlSession.getMapper(UserMapper.class).getAllUser();
-
             //二级缓存，同一个namespace下
-            sqlSession.close();
-            SqlSession sqlS = ssf.openSession();
-            List<User> cacheSecond = sqlS.getMapper(UserMapper.class).getAllUser();
+            //sqlSession.close();
+            //SqlSession sqlS = ssf.openSession();
+            //List<User> cacheSecond = sqlS.getMapper(UserMapper.class).getAllUser();
 
             System.out.println("over");
         } catch (IOException e) {

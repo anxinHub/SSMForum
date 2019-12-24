@@ -74,6 +74,11 @@
 
         <!--other-->
         <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.5.2</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.0</version>
@@ -110,20 +115,23 @@
     <build>
         <finalName>formuWebMaven</finalName>
         <!--idea默认编译src/main/java下的java文件(标记为source文件夹)-->
-        <resources>
+        <!--resources 配置修改了 maven默认的目录结构,target没有编译-->
+       <!-- <resources>
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.xml</include>
                 </includes>
+                <filtering>true</filtering>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*.bpmn</include>
                 </includes>
+                <filtering>true</filtering>
             </resource>
-        </resources>
+        </resources>-->
 
 <!--        <plugins>
             &lt;!&ndash;maven未指定jdk时，在重启或修改pom后会使用默认jdk版本，level和compile会重置&ndash;&gt;
