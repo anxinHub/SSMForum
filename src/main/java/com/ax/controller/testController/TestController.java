@@ -1,5 +1,6 @@
 package com.ax.controller.testController;
 
+import com.ax.base.ImgChange;
 import com.ax.dao.UserMapper;
 import com.ax.model.FileLib;
 import com.ax.model.User;
@@ -9,13 +10,17 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +28,24 @@ import java.util.List;
 
 @Controller
 public class TestController {
+
+    @RequestMapping("/goQRCODE")
+    public void checkPngQRcode(){
+        System.out.println("entry controller of QRCODE");
+        ImgChange imgChange =new ImgChange();
+//        imgChange.pdfToImg();
+//        imgChange.extractImages();
+//        InputStream is =new ;
+        try {
+            ImgChange.cutPNG(new FileInputStream("E:/gitaxforum/SSMForum/src/main/webapp/img/telePng.png"),
+                    new FileOutputStream("E:/gitaxforum/SSMForum/src/main/webapp/img/telePngCut.png"), 0,0,150,150);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     @RequestMapping("/helloJBDCtest")
     public void testJDBC(HttpServletRequest req, HttpServletResponse res) {
         System.out.println("----------------------------");
@@ -100,4 +123,6 @@ public class TestController {
             e.printStackTrace();
         }
     }
+
+
 }

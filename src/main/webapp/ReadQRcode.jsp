@@ -13,10 +13,9 @@
   <title>dd</title>
 </head>
 <body>
-  <img src="<%=path%>/img/tele.pdf" id="telePdf">
-  <img src="<%=path%>/img/billQR.png" id="billQR">
-  <img src="<%=path%>/img/baiduQR.png" id="baiduQR">
+<div>
   <embed src="<%=path%>/img/tele.pdf" id="embedimgurl">
+</div>
   <div>
     <button id="readRQC">识别上面图片</button>
   </div>
@@ -25,8 +24,8 @@
 <script src="js/common/llqrcode.js"></script>
 <script>
   var rr = function(imgUrl){
-      var uimg = './img/billQRComplete.png'
-      var imgurl3 = document.getElementById('billQR').getAttribute('src')
+      var uimg = './img/tele.pdf'
+      // var uimg = document.getElementById('telePdf').getAttribute('src')
       console.log('entry function'+imgUrl);
       try {
           qrcode.decode(uimg);
