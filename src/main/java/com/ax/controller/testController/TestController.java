@@ -30,18 +30,26 @@ import java.util.List;
 public class TestController {
 
     @RequestMapping("/goQRCODE")
-    public void checkPngQRcode(){
+    public void checkPngQRcode(HttpServletResponse resp,HttpServletRequest req,String code){
         System.out.println("entry controller of QRCODE");
-        ImgChange imgChange =new ImgChange();
-//        imgChange.pdfToImg();
-//        imgChange.extractImages();
-//        InputStream is =new ;
+        req.getParameter("a");
         try {
-            ImgChange.cutPNG(new FileInputStream("E:/gitaxforum/SSMForum/src/main/webapp/img/telePng.png"),
-                    new FileOutputStream("E:/gitaxforum/SSMForum/src/main/webapp/img/telePngCut.png"), 0,0,150,150);
+            resp.getWriter().print("{a:1}");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+//        ImgChange imgChange =new ImgChange();
+//        imgChange.pdfToImg();
+//        imgChange.extractImages();
+//        InputStream is =new ;
+
+//        try {
+//            ImgChange.cutPNG(new FileInputStream("E:/gitaxforum/SSMForum/src/main/webapp/img/telePng.png"),
+//                    new FileOutputStream("E:/gitaxforum/SSMForum/src/main/webapp/img/telePngCut.png"), 0,0,150,150);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 

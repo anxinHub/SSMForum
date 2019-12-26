@@ -12,6 +12,9 @@ import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -84,7 +87,8 @@ public class ImgChange {
     public String extractImages() {
 //        String filename = "E:/gitaxforum/SSMForum/src/main/webapp/img/billPdf.pdf";  error
 //        String filename = "E:/gitaxforum/SSMForum/src/main/webapp/img/billQR.png";  ok
-        String filename = "E:/gitaxforum/SSMForum/src/main/webapp/img/billQRComplete.png";
+//        String filename = "E:/gitaxforum/SSMForum/src/main/webapp/img/telePng.png";  ok //camera1 null //camera2 ok
+        String filename = "E:/gitaxforum/SSMForum/src/main/webapp/img/camera3.jpg";
         String returnResult = "";
         MultiFormatReader multiFormatReader = new MultiFormatReader();
         File file = new File(filename);
@@ -131,6 +135,24 @@ public class ImgChange {
             ImageIO.write(bi, "png", out);
         } finally {
             imageStream.close();
+        }
+    }
+    public void isQRcodeImg(){
+        String filename = "E:/gitaxforum/SSMForum/src/main/webapp/img/camera2.jpg";
+        try {
+
+            URL url = new URL(filename);
+            HttpURLConnection hucon = (HttpURLConnection) url.openConnection();
+            hucon.setConnectTimeout(5000);
+            hucon.setRequestMethod("GET");
+            if (hucon.getResponseCode() == 200) {
+                InputStream inputStream = hucon.getInputStream();
+//                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                //decodeImage(bitmap);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
